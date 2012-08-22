@@ -8,18 +8,20 @@ Stable tag: 1.0
 
 == Description ==
 
-pUT your city weather in post/page or widget. Easy to customize and support multi-widget.
+Put your city weather in post/page or widget. Easy to customize and support multi-widget.
+
 
 Options
 
-Admin Panel
-Temperature Options
-Easly customizable Stylesheet
+1.Admin Panel
+2.Temperature Options
+3.Easly customizable Stylesheet
 
 
 Credits
-Yahoo Weather
-Weather Location Codes/IDs 
+
+1.Yahoo Weather
+2.Weather Location Codes/IDs 
 
 
 == Installation ==
