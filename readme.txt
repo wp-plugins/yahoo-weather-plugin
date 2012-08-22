@@ -34,9 +34,11 @@ You can use the built-in installer, or you can install the plugin manually.
 </ul>
 
 ==Usage==
-Use shorte code [ywsc] in your post/page.
-Use as widget write shortcode [ywsc] in text widget
-Note:if your theme does not support widget shortcode put  "add_filter('widget_text', 'do_shortcode')" in yout function.php file.
+<ul>
+<li>Use shorte code [ywsc] in your post/page.</li>
+<li>Use as widget write shortcode [ywsc] in text widget.</li>
+<li>Note:if your theme does not support widget shortcode put  "add_filter('widget_text', 'do_shortcode')" in yout function.php file.</li>
+</ul>
 
 == Frequently Asked Questions ==
 
