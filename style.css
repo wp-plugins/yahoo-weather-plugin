@@ -1,0 +1,12 @@
+body {
+	margin: 1em 3em;
+	font-family: Tahoma, Genevam, sans-serif;
+      }
+   .box{
+        height:33px;
+        width:33px;
+        display:inline-block;
+        vertical-align:middle;
+        overflow:hidden;
+        /*background:#000000;*/
+     }
