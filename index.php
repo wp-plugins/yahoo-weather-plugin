@@ -7,8 +7,6 @@ Version: 1.0
 Author: Muhammad Yasir khan
 Author URI: http://zykhan.wordpress.com
 License: Under GPL2
-*/
-/*
 	Copyright 2012 zykhan (email : sir_yasir@hotmail.com)
 
     This program is free software; you can redistribute it and/or modify
@@ -24,23 +22,27 @@ License: Under GPL2
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-error_reporting(E_ALL & ~E_NOTICE);
-ini_set('display_errors', 1);
+if (is_admin()) {
+register_activation_hook(__FILE__, 'ywp_install');
+}
+function ywp_install() {
+$options=array(
+'city' =>'PKXX0008',
+'temp' =>'c',
+);
+update_option('city_unit',$options);
+}
 add_action("admin_menu","weather_code_add_page");
 
 function weather_code_add_page(){
-
 add_options_page('Weather Options','Weather Options','manage_options','displaying_weather_options','weather_dis_options_page');
 }
-           function weather_dis_options_page(){
-                        ?>
-         <div class="wrap">
-
+ function weather_dis_options_page(){
+ ?>
+           <div class="wrap">
            <?php screen_icon(); ?>
-
-            <h1> Weather Plugin</h1>
-           <form action="" method="post">
+           <h1> Weather Plugin</h1>
+           <form action="" method="post" >
                <p>Enter Location code/ID:<input name="yw1" id="yw1" type="text" value="<?php echo $_POST['yw1'] ?>" /></p>
                <p>Select tempreature unit:<select name="unit">
                <option value="c" name="yw2">C</option>
@@ -48,41 +50,29 @@ add_options_page('Weather Options','Weather Options','manage_options','displayin
                </select></p>
              <input type="submit" name="submit" value="Save Changes" />
             <input type="reset" name="reset" value="Reset" />
-            <p>You can search Location codes/IDs from <a href="http://www.edg3.co.uk/snippets/weather-location-codes/">here</a></p>
+            <p>You can search Location codes/IDs from <a href="http://www.edg3.co.uk/snippets/weather-location-codes">Here</a> </p>
                </form>
-
-            </div>
+               </div>
             <?php
-            //global
-            //$yw1=$_POST['yw1'];
             $options=array('city'=>$_POST['yw1'],'temp'=>$_POST['unit']);
-            //print_r($options);
-            //echo $yw1;
-
-
-            if(isset($_POST['submit'])){
-             if(empty($_POST['yw1'])){ ?>
+             if(isset($_POST['submit'])){
+             if(empty($_POST['yw1'])){ 
+               ?>
                <p><div id="message" class="error"> Please Enter City Code</div></p>
              <?php }else{
                 $yw1=$_POST['yw1'];
                 add_option('city_unit', $options);
-           update_option('city_unit', $options);?>
-           <p><div id="message" class="updated">Settings saved successfully </div></p>
-            <?php  }
+                update_option('city_unit', $options);?>
+           <p><div id="message" class="updated"><p>Settings saved successfully</p> </div></p>
+            <?php }
             }
             }
-
-
-
-
-            //add_action ("the_post", "yw");
             add_action('wp_head', 'my_ss');
             function my_ss(){
              wp_register_style('my_css', plugins_url('style.css',__FILE__ ));
              wp_enqueue_style('my_css');
              }
-
-            add_shortcode('ywsc', 'yw');
+             add_shortcode('ywsc', 'yw');
             function yw(){
             $yw1 = get_option('city_unit');
             $city=$yw1['city'];
@@ -108,48 +98,26 @@ add_options_page('Weather Options','Weather Options','manage_options','displayin
     //now I search within '$item' for the element "description"
     $describe = $itemgotten->getElementsByTagName("description");
     //once I find it I create a variable named "$description" and assign the value of the Element to it
-   // foreach($describe as $des){
-  //    print_r($des->childNodes->item(2)->nodeValue);
-
-  //  }
-
     $description = $describe->item(0)->nodeValue;
     $icon=preg_match('/src="(.*?)"/i',$description,$im);
     $loc['ico']=$im[0];
-
-
     //and display it on-screen
-
     //print_r($description);
     $yw_arr=array('location','units','condition');
+    $yw_url="http://xml.weather.yahoo.com/ns/rss/1.0";
                if($chnl->hasAttribute('city')){
            echo "Empty element found";
            }
-            $loc[] = $chnl->getElementsByTagNameNS("http://xml.weather.yahoo.com/ns/rss/1.0","$yw_arr[0]")->item(0)->getAttribute('city');
-            $loc[] = $chnl->getElementsByTagNameNS("http://xml.weather.yahoo.com/ns/rss/1.0","$yw_arr[0]")->item(0)->getAttribute('country');
-            $loc[] = $chnl->getElementsByTagNameNS("http://xml.weather.yahoo.com/ns/rss/1.0","$yw_arr[2]")->item(0)->getAttribute('temp');
-            $loc[] = $chnl->getElementsByTagNameNS("http://xml.weather.yahoo.com/ns/rss/1.0","$yw_arr[1]")->item(0)->getAttribute('temperature');
-            $loc[] = $chnl->getElementsByTagNameNS("http://xml.weather.yahoo.com/ns/rss/1.0","$yw_arr[2]")->item(0)->getAttribute('text');
-            //$loc[]=$tit->item(0)->getAttribute('city');
-           //$loc[]=$tit->item(0)->getAttribute('temp');
-            ?>
-
-            <?php
-
+            $loc[] = $chnl->getElementsByTagNameNS("$yw_url","$yw_arr[0]")->item(0)->getAttribute('city');
+            $loc[] = $chnl->getElementsByTagNameNS("$yw_url","$yw_arr[0]")->item(0)->getAttribute('country');
+            $loc[] = $chnl->getElementsByTagNameNS("$yw_url","$yw_arr[2]")->item(0)->getAttribute('temp');
+            $loc[] = $chnl->getElementsByTagNameNS("$yw_url","$yw_arr[1]")->item(0)->getAttribute('temperature');
+            $loc[] = $chnl->getElementsByTagNameNS("$yw_url","$yw_arr[2]")->item(0)->getAttribute('text');
             $final=$loc[0].",".$loc[1]." |";
-              //print_r($yw_arr);
-
-
-              $final2= "<span class=\"box\"><img width=\"33\" height=\"33\" title=\" $loc[4] \" $loc[ico] /></span> ";
+            $final2= "<span class=\"box\"><img width=\"33\" height=\"33\" title=\" $loc[4] \" $loc[ico] /></span> ";
               $final1=$loc[2]."&#176"." ".$loc[3]."".$loc[5];
-             // return $final2;
-               ?>
-
-                <?php
                 return $final. $final2 . $final1;
-                    }
+            }
     }
-
-
 }
 ?>
