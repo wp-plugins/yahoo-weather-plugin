@@ -56,7 +56,7 @@ add_options_page('Weather Options','Weather Options','manage_options','displayin
             <?php
             $options=array('city'=>$_POST['yw1'],'temp'=>$_POST['unit']);
              if(isset($_POST['submit'])){
-             if(empty($_POST['yw1'])){ 
+             if(empty($_POST['yw1'])){
                ?>
                <p><div id="message" class="error"> Please Enter City Code</div></p>
              <?php }else{
@@ -85,17 +85,17 @@ add_options_page('Weather Options','Weather Options','manage_options','displayin
     if(!$doc){
     echo "Yahoo Weather not responding";
     }
-    //now I get all elements inside this document with the following name "channel", this is the 'root'
+    //'root'
     $channel = $doc->getElementsByTagName("channel");
-    //now I go through each item withing $channel
+    //each item withing $channel
 
     foreach($channel as $chnl)
     {
-             //I then find the 'item' element inside that loop
+             //element in loop
     $item = $chnl->getElementsByTagName("item");
     foreach($item as $itemgotten)
     {
-    //now I search within '$item' for the element "description"
+    //'$item' for the element "description"
     $describe = $itemgotten->getElementsByTagName("description");
     //once I find it I create a variable named "$description" and assign the value of the Element to it
     $description = $describe->item(0)->nodeValue;
