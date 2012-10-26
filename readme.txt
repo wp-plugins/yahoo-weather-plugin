@@ -9,6 +9,7 @@ Stable tag: 1.0
 == Description ==
 
 Put your city weather in post/page or widget. Easy to customize and support multi-widget.
+Enhanced Weather Icons and output.
 
 
 <h4>Options</h4>
