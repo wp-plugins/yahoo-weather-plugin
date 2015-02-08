@@ -60,6 +60,7 @@ add_options_page('Weather Options','Weather Options','manage_options','yahooweat
                       echo $options[temp]; 
                ?>
                <p>Enter Location code/ID:<input type='text' name='city_unit[city]' value='<?php echo $options['city']; ?>' /></p>
+               <p>Insert multiple location codes with comma','</p>
                <p>Select tempreature unit:<select name='city_unit[temp]'>
                <option value='c' <?php selected( $options['temp'], c ); ?>>C</option>
                 <option value='f' <?php selected( $options['temp'], f ); ?>>F</option>
